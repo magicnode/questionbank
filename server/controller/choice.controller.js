@@ -1,12 +1,13 @@
 import co from 'co';
+import { uniq } from 'lodash';
 import httpStatus from 'http-status';
 import mongoose from 'mongoose';
 import APIError from '../helpers/apierror.helper';
-import Topic from '../models/topic.model'
+import Choice from '../models/choice.model'
 
 function index(req, res, next) {
     const query = req.query;
-    Topic.list({ query })
+    Choice.list({ query })
         .then(result => {
             if (result.length === 0) {
                 let err = new APIError('not found', httpStatus.NOT_FOUND);
@@ -23,8 +24,9 @@ function index(req, res, next) {
 
 function create(req, res, next) {
     const body = req.body;
-    const topic = new Topic(body);
-    topic.save()
+    body['content'] = body['content'] ? uniq(body['content']) : null;
+    const choice = new Choice(body);
+    choice.save()
         .then(rs => {
             return res.send(rs)
         })
@@ -38,7 +40,7 @@ function create(req, res, next) {
 
 function show(req, res, next) {
     const query = req.params;
-    Topic.get({ query })
+    Choice.get({ query })
         .then(result => {
             return res.send(result)
         })
@@ -52,7 +54,7 @@ function show(req, res, next) {
 function update(req, res, next) {
     const params = req.params;
     const body = req.body;
-    Topic.findOneAndUpdate(params, body)
+    Choice.findOneAndUpdate(params, body)
         .then(result => {
             return res.json(result)
         })
@@ -66,7 +68,7 @@ function update(req, res, next) {
 function destroy(req, res, next) {
     const params = req.params;
     const body = req.body;
-    Topic.findOneAndRemove(params)
+    Choice.findOneAndRemove(params)
         .then(result => {
             return res.json(result)
         })

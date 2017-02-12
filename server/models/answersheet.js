@@ -1,15 +1,26 @@
 /*
- * Module description: topic answer 题目答案
+ * Module description: answer sheet 用户 答案
  */
-import mongoose  from 'mongoose';
+import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
-const answerSchema = new Schema({
-    content: String,
+const answersheetSchema = new Schema({
+    paper_id: {
+        type: Schema.Types.ObjectId,
+        required: true
+    },
+    topic_id: {
+        type: Schema.Types.ObjectId,
+        required: true
+    },
+    answer_id: [{
+        type: Schema.Types.ObjectId
+    }],
+    content: [String],
     timestamp: { type: Number, default: Date.now.valueOf() }
 })
 
-answerSchema.statics = {
+answersheetSchema.statics = {
     /**
      * Get topic
      * @param {ObjectId} id - The objectId of user.
@@ -27,4 +38,4 @@ answerSchema.statics = {
     }
 }
 
-export default mongoose.model('answer', answerSchema, 'answer');
+export default mongoose.model('answersheet', answersheetSchema, 'answersheet');

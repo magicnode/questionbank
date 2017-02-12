@@ -1,17 +1,24 @@
 /*
- * Module description: paper 试卷
+ * Module description: choice question 题目内容
  */
 import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
-const paper_Schema = new Schema({
-    topic: [{ type: Schema.Types.ObjectId }], //试题
-    difficulty: { type: Number, default: 1 }, //试卷总难度
-    score: { type: Number, default: 1 }, //试卷总分数
-    timestamp: { type: Number, default: Date.now.valueOf() }
+const contentSchema = new Schema({
+    sign: {
+        type: String,
+        min: 'A',
+        max: 'Z'
+    },
+    item: {
+        type: String,
+        default: '',
+        required: true
+    },
+    timestamp: { type: String, default: Date.now.valueOf() }
 })
 
-paper_Schema.statics = {
+contentSchema.statics = {
     /**
      * Get topic
      * @param {ObjectId} id - The objectId of user.
@@ -43,4 +50,4 @@ paper_Schema.statics = {
     }
 }
 
-export default mongoose.model('paper', paper_Schema, 'paper');
+export default mongoose.model('content', contentSchema, 'content');

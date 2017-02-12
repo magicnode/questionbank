@@ -1,8 +1,9 @@
 /**
- * Module dependencies.
+ * article model
  */
 
-const mongoose = require('mongoose');
+import mongoose  from 'mongoose';
+
 const Schema = mongoose.Schema;
 
 const getTags = tags => tags.join(',');
@@ -160,4 +161,4 @@ ArticleSchema.statics = {
   }
 };
 
-mongoose.model('Article', ArticleSchema);
+export default mongoose.model('Article', ArticleSchema);

@@ -9,7 +9,7 @@ router.route('/')
       .get(userCtrl.getAll)
       .post(userCtrl.create);
 
-router.route('/:user')
+router.route('/:id')
       .get(userCtrl.show)
       .put(userCtrl.update)
       .delete(userCtrl.destroy);

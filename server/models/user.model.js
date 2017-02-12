@@ -1,7 +1,7 @@
 /*
  * Module description: user 用户
  */
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const crypto = require('crypto');
 
 const Schema = mongoose.Schema;
@@ -165,4 +165,4 @@ UserSchema.statics = {
     }
 };
 
-mongoose.model('User', UserSchema);
+export default mongoose.model('User', UserSchema);

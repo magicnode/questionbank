@@ -2,11 +2,11 @@ import co from 'co';
 import httpStatus from 'http-status';
 import mongoose from 'mongoose';
 import APIError from '../helpers/apierror.helper';
-import Topic from '../models/topic.model'
+import Content from '../models/content.model'
 
 function index(req, res, next) {
     const query = req.query;
-    Topic.list({ query })
+    Content.list({ query })
         .then(result => {
             if (result.length === 0) {
                 let err = new APIError('not found', httpStatus.NOT_FOUND);
@@ -23,8 +23,8 @@ function index(req, res, next) {
 
 function create(req, res, next) {
     const body = req.body;
-    const topic = new Topic(body);
-    topic.save()
+    const doc = new Content(body);
+    doc.save()
         .then(rs => {
             return res.send(rs)
         })
@@ -38,7 +38,7 @@ function create(req, res, next) {
 
 function show(req, res, next) {
     const query = req.params;
-    Topic.get({ query })
+    Content.get({ query })
         .then(result => {
             return res.send(result)
         })
@@ -52,7 +52,7 @@ function show(req, res, next) {
 function update(req, res, next) {
     const params = req.params;
     const body = req.body;
-    Topic.findOneAndUpdate(params, body)
+    Content.findOneAndUpdate(params, body)
         .then(result => {
             return res.json(result)
         })
@@ -66,7 +66,7 @@ function update(req, res, next) {
 function destroy(req, res, next) {
     const params = req.params;
     const body = req.body;
-    Topic.findOneAndRemove(params)
+    Content.findOneAndRemove(params)
         .then(result => {
             return res.json(result)
         })
@@ -77,15 +77,10 @@ function destroy(req, res, next) {
         })
 }
 
-function edit(req, res, next) {
-
-}
-
 export default {
     index,
     create,
     show,
     update,
-    destroy,
-    edit
+    destroy
 }
