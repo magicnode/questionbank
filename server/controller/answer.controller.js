@@ -3,11 +3,11 @@ import { uniq } from 'lodash';
 import httpStatus from 'http-status';
 import mongoose from 'mongoose';
 import APIError from '../helpers/apierror.helper';
-import Choice from '../models/choice.model'
+import Answer from '../models/answer.model'
 
 function index(req, res, next) {
     const query = req.query;
-    Choice.list({ query })
+    Answer.list({ query })
         .then(result => {
             if (result.length === 0) {
                 let err = new APIError('not found', httpStatus.NOT_FOUND);
@@ -24,9 +24,8 @@ function index(req, res, next) {
 
 function create(req, res, next) {
     const body = req.body;
-    body['content'] = body['content'] ? uniq(body['content']) : null;
-    const choice = new Choice(body);
-    choice.save()
+    const answer = new Answer(body);
+    answer.save()
         .then(rs => {
             return res.send(rs)
         })
@@ -40,7 +39,7 @@ function create(req, res, next) {
 
 function show(req, res, next) {
     const query = req.params;
-    Choice.get({ query })
+    Answer.get({ query })
         .then(result => {
             return res.send(result)
         })
@@ -54,7 +53,7 @@ function show(req, res, next) {
 function update(req, res, next) {
     const params = req.params;
     const body = req.body;
-    Choice.findOneAndUpdate(params, body)
+    Answer.findOneAndUpdate(params, body)
         .then(result => {
             return res.json(result)
         })
@@ -68,7 +67,7 @@ function update(req, res, next) {
 function destroy(req, res, next) {
     const params = req.params;
     const body = req.body;
-    Choice.findOneAndRemove(params)
+    Answer.findOneAndRemove(params)
         .then(result => {
             return res.json(result)
         })

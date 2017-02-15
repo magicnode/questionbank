@@ -3,7 +3,7 @@ import userRoutes from './user.route';
 import qrRoutes from './qr.route';
 import captchaRoutes from './captcha.route';
 import topicRoutes from './topic.route';
-import choiceRoutes from './choice.route';
+import answerRoutes from './answer.route';
 import contentRoutes from './content.route';
 
 const router = express.Router();
@@ -16,7 +16,7 @@ router.use('/users', userRoutes);
 router.use('/qr', qrRoutes);
 router.use('/captcha', captchaRoutes);
 router.use('/topics', topicRoutes);
-router.use('/choices', choiceRoutes);
+router.use('/answers', answerRoutes);
 router.use('/contents', contentRoutes);
 
 export default router;
