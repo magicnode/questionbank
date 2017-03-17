@@ -33,7 +33,17 @@ app.use(favicon(config.rootPath + '/love.ico'));
 app.use(helmet());
 
 // enable CORS - Cross Origin Resource Sharing
-app.use(cors());
+let corsOptions = {};
+if (config.env === 'production') {
+  const corsOptions = {
+    origin: function (origin, callback) {
+      const originIsWhitelisted = config.whitelist.indexOf(origin) !== -1
+      callback(originIsWhitelisted ? null : 'Bad Request', originIsWhitelisted)
+    },
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  }
+}
+app.use(cors(corsOptions));
 app.disable('x-powered-by');
 
 //express jwt middleware

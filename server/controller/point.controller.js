@@ -1,12 +1,14 @@
 import co from 'co';
+import { uniq } from 'lodash';
 import httpStatus from 'http-status';
 import mongoose from 'mongoose';
 import APIError from '../helpers/apierror.helper';
-import Content from '../models/content.model'
+import Point from '../models/point.model'
+import Topic from '../models/topic.model'
 
 function index(req, res, next) {
     const query = req.query;
-    Content.list({ query })
+    Point.list({ query })
         .then(result => {
             if (result.length === 0) {
                 let err = new APIError('not found', httpStatus.NOT_FOUND);
@@ -23,8 +25,8 @@ function index(req, res, next) {
 
 function create(req, res, next) {
     const body = req.body;
-    const doc = new Content(body);
-    doc.save()
+    const point = new Point(body);
+    point.save()
         .then(rs => {
             return res.send(rs)
         })
@@ -38,7 +40,7 @@ function create(req, res, next) {
 
 function show(req, res, next) {
     const query = req.params;
-    Content.get({ query })
+    Point.get({ query })
         .then(result => {
             return res.send(result)
         })
@@ -52,7 +54,7 @@ function show(req, res, next) {
 function update(req, res, next) {
     const params = req.params;
     const body = req.body;
-    Content.findOneAndUpdate(params, body)
+    Point.findOneAndUpdate(params, body)
         .then(result => {
             return res.json(result)
         })
@@ -66,9 +68,27 @@ function update(req, res, next) {
 function destroy(req, res, next) {
     const params = req.params;
     const body = req.body;
-    Content.findOneAndRemove(params)
+    Point.findOneAndRemove(params)
         .then(result => {
             return res.json(result)
+        })
+        .catch(err => {
+            console.error(err)
+            err = new APIError(err.message, httpStatus.NOT_FOUND, true);
+            return next(err);
+        })
+}
+
+function edit(req, res, next) {
+
+}
+
+function topicshow(req, res, next) {
+    const point_id = req.params._id;
+    const query = {point_ids:{$in:[point_id]}};
+    Topic.list({query})
+        .then(result => {
+            return res.send(result)
         })
         .catch(err => {
             console.error(err)
@@ -82,5 +102,7 @@ export default {
     create,
     show,
     update,
-    destroy
+    destroy,
+    edit,
+    topicshow
 }

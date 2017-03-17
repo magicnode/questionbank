@@ -1,24 +1,20 @@
 /*
- * Module description: choice question 题目内容
+ * Module description: point 知识点
  */
 import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
-const contentSchema = new Schema({
-    sign: {
+
+const pointSchema = new Schema({
+    name: {
         type: String,
-        min: 'A',
-        max: 'Z'
+        required: true,
+        unique: true
     },
-    item: {
-        type: String,
-        default: '',
-        required: true
-    },
-    timestamp: { type: String, default: Date.now.valueOf() }
+    timestamp: { type: Number, default: Date.now.valueOf() }
 })
 
-contentSchema.statics = {
+pointSchema.statics = {
     /**
      * Get topic
      * @param {ObjectId} id - The objectId of user.
@@ -50,4 +46,4 @@ contentSchema.statics = {
     }
 }
 
-export default mongoose.model('content', contentSchema, 'content');
+export default mongoose.model('point', pointSchema, 'point');

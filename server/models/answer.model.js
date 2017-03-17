@@ -5,7 +5,11 @@ import mongoose  from 'mongoose';
 
 const Schema = mongoose.Schema;
 const answerSchema = new Schema({
-    content: String,
+    topic_id: Schema.Types.ObjectId,
+    item_id: [{
+        type: Schema.Types.ObjectId,
+        required: true
+    }],
     timestamp: { type: Number, default: Date.now.valueOf() }
 })
 

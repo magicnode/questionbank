@@ -1,35 +1,20 @@
 /*
- * Module description: paper 试卷
+ * Module description: paper classify 试卷分类
  */
 import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
-const paper_Schema = new Schema({
-    //试卷名
-    title: {
+
+const paper_classifySchema = new Schema({
+    name: {
         type: String,
-        default: ''
+        required: true,
+        unique: true
     },
-    //知识点 分类
-    paper_classify: {type: Schema.Types.ObjectId, ref: 'paper_classify'},
-    //试卷总难度
-    difficulty: { type: Number, default: 1 },
-    //试卷总分数
-    score: { type: Number, default: 1 },
-    //是否分级
-    is_classify: Boolean,
-    //所有的topic_id
-    topic_id: [Schema.Types.ObjectId],
-    //试卷分层， name：层级名字 order：显示顺序 topic_id：这一级试题id集合
-    classify: [{
-        name: String,
-        order: Number,
-        topic_id:[Schema.Types.ObjectId]
-    }],
     timestamp: { type: Number, default: Date.now.valueOf() }
 })
 
-paper_Schema.statics = {
+paper_classifySchema.statics = {
     /**
      * Get topic
      * @param {ObjectId} id - The objectId of user.
@@ -61,4 +46,4 @@ paper_Schema.statics = {
     }
 }
 
-export default mongoose.model('paper', paper_Schema, 'paper');
+export default mongoose.model('paper_classify', paper_classifySchema, 'paper_classify');

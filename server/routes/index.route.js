@@ -4,7 +4,11 @@ import qrRoutes from './qr.route';
 import captchaRoutes from './captcha.route';
 import topicRoutes from './topic.route';
 import answerRoutes from './answer.route';
-import contentRoutes from './content.route';
+import itemRoutes from './item.route';
+import pointRoutes from './point.route';
+import pointtopicRoutes from './pointtopic.route';
+import paperRoutes from './paper.route';
+import paperclassifyRoutes from './paper_classify.route';
 
 const router = express.Router();
 
@@ -17,6 +21,10 @@ router.use('/qr', qrRoutes);
 router.use('/captcha', captchaRoutes);
 router.use('/topics', topicRoutes);
 router.use('/answers', answerRoutes);
-router.use('/contents', contentRoutes);
+router.use('/items', itemRoutes);
+router.use('/points', pointRoutes);
+router.use('/pointtopics', pointtopicRoutes);
+router.use('/papers', paperRoutes);
+router.use('/paperclassifies', paperclassifyRoutes);
 
 export default router;
